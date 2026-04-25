@@ -118,6 +118,13 @@
     return null;
   }
 
+  function filterMapleStoryItems(items) {
+    return items.filter((item) => {
+      const gameName = item.gameName || "";
+      return gameName.includes("메이플");
+    });
+  }
+
   window.NexonMvpAnalyzer.mvp = {
     getMvpWeekStart,
     getMvpPeriod,
@@ -127,5 +134,6 @@
     getCurrentMvpSummary,
     getNextWeekSummary,
     getFutureGradeDrop,
+    filterMapleStoryItems,
   };
 })();

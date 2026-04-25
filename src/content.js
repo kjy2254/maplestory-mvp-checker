@@ -2,7 +2,7 @@
   "use strict";
 
   const { fetchRecentHistory } = window.NexonMvpAnalyzer.api;
-  const { getCurrentMvpSummary, getFutureGradeDrop } =
+  const { getCurrentMvpSummary, getFutureGradeDrop, filterMapleStoryItems } =
     window.NexonMvpAnalyzer.mvp;
   const {
     createPanel,
@@ -19,7 +19,7 @@
 
     try {
       const history = await fetchRecentHistory();
-      const mapleItems = mvp.filterMapleStoryItems(history);
+      const mapleItems = filterMapleStoryItems(history);
       const summary = getCurrentMvpSummary(mapleItems);
       const dropInfo = getFutureGradeDrop(summary, mapleItems);
 
