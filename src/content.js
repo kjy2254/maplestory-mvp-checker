@@ -2,8 +2,16 @@
   "use strict";
 
   const { fetchRecentHistory } = window.NexonMvpAnalyzer.api;
-  const { getCurrentMvpSummary, getFutureGradeDrop } = window.NexonMvpAnalyzer.mvp;
-  const { createPanel, createAnalyzeButton, setButtonLoading, renderLoading, renderError, renderWeeklyResult } = window.NexonMvpAnalyzer.ui;
+  const { getCurrentMvpSummary, getFutureGradeDrop } =
+    window.NexonMvpAnalyzer.mvp;
+  const {
+    createPanel,
+    createAnalyzeButton,
+    setButtonLoading,
+    renderLoading,
+    renderError,
+    renderWeeklyResult,
+  } = window.NexonMvpAnalyzer.ui;
 
   async function handleAnalyzeClick() {
     renderLoading();
@@ -24,7 +32,7 @@
   }
 
   function init() {
-    createPanel();
+    // createPanel();
     createAnalyzeButton(handleAnalyzeClick);
   }
 

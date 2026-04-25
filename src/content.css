@@ -127,3 +127,26 @@
   color: #d00000;
   line-height: 1.6;
 }
+
+#nma-panel {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-color: #c9ced6 transparent;
+  &::-webkit-scrollbar-thumb:hover {
+    background: #aeb4bf;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 12px 0;
+    border-radius: 999px;
+  }
+  &::-webkit-scrollbar {
+    width: 7px;
+    background-color: #f1f1f1;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c9ced6;
+    border-radius: 999px;
+    border: 2px solid white;
+  }
+}

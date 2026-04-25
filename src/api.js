@@ -1,7 +1,8 @@
 (function () {
   "use strict";
 
-  const { API_URL, PAGE_DELAY_MS, RECENT_MONTH_COUNT } = window.NexonMvpAnalyzer.constants;
+  const { API_URL, PAGE_DELAY_MS, RECENT_MONTH_COUNT } =
+    window.NexonMvpAnalyzer.constants;
   const { sleep } = window.NexonMvpAnalyzer.utils;
 
   async function fetchCashHistory(year, month, cursor = 0) {
@@ -52,7 +53,8 @@
 
     while (true) {
       const json = await fetchCashHistory(year, month, cursor);
-      const list = json?.data?.nexonCashHistoryDetailUseWithPaging?.useList ?? [];
+      const list =
+        json?.data?.nexonCashHistoryDetailUseWithPaging?.useList ?? [];
 
       if (list.length === 0) break;
 
@@ -95,7 +97,7 @@
   window.NexonMvpAnalyzer.api = {
     fetchCashHistory,
     fetchMonthHistory,
-    fetchRecentMonths: fetchRecentHistory,
+    fetchRecentHistory,
     getRecentMonths,
   };
 })();
