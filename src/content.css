@@ -1,0 +1,129 @@
+.nma-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 80px;
+  width: 400px;
+  max-height: 600px;
+  overflow-y: auto;
+  background: #ffffff;
+  color: #111111;
+  border: 1px solid #dddddd;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  z-index: 999999;
+  padding: 16px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+}
+
+.nma-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.nma-close-button {
+  border: none;
+  background: #eeeeee;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.nma-analyze-button {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 999999;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+  background: #222222;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nma-analyze-button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.nma-card {
+  background: #f7f8fa;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.nma-card-warning {
+  background: #fff7e6;
+}
+
+.nma-label {
+  color: #777777;
+  margin-bottom: 4px;
+}
+
+.nma-grade {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.nma-total {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.nma-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.nma-section-title {
+  font-weight: 700;
+  margin: 12px 0 8px;
+}
+
+.nma-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.nma-table th {
+  text-align: left;
+  padding: 6px 4px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.nma-table td {
+  padding: 7px 4px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.nma-right {
+  text-align: right;
+}
+
+.nma-period {
+  font-weight: 600;
+}
+
+.nma-sub-text {
+  font-size: 12px;
+  color: #777777;
+}
+
+.nma-loading {
+  padding: 12px;
+  color: #555555;
+}
+
+.nma-error {
+  color: #d00000;
+  line-height: 1.6;
+}

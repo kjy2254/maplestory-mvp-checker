@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Nexon MVP Analyzer",
+  "version": "0.1.0",
+  "description": "넥슨 결제 사용 내역을 기반으로 메이플스토리 MVP 등급을 분석하고 예측합니다.",
+  "content_scripts": [
+    {
+      "matches": ["https://payment.nexon.com/*"],
+      "js": [
+        "src/constants.js",
+        "src/utils.js",
+        "src/api.js",
+        "src/mvp.js",
+        "src/ui.js",
+        "src/content.js"
+      ],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "https://payment.nexon.com/*",
+    "https://public.api.nexon.com/*"
+  ]
+}
