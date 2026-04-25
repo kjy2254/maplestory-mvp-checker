@@ -31,6 +31,49 @@
   cursor: pointer;
 }
 
+.nma-header-title {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nma-help-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: help;
+}
+
+.nma-tooltip {
+  display: none;
+  position: absolute;
+  top: 24px;
+  left: 0;
+  width: 260px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #111827;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.55;
+  font-weight: 400;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  z-index: 1000000;
+}
+
+.nma-header-title:hover .nma-tooltip,
+.nma-header-title:focus-within .nma-tooltip {
+  display: block;
+}
+
 .nma-analyze-button {
   position: fixed;
   right: 24px;
@@ -52,25 +95,37 @@
 }
 
 .nma-card {
-  background: #f7f8fa;
-  border-radius: 10px;
-  padding: 12px;
+  border-radius: 14px;
+  padding: 14px;
   margin-bottom: 12px;
-  line-height: 1.6;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.nma-card-current {
+  background: linear-gradient(135deg, #f8fafc, #eef2ff);
 }
 
 .nma-card-warning {
-  background: #fff7e6;
+  background: linear-gradient(135deg, #fff7ed, #fffbeb);
+}
+
+.nma-card-weekly {
+  background: linear-gradient(135deg, #f8fafc, #f6f0fd);
 }
 
 .nma-label {
-  color: #777777;
+  font-weight: 700;
   margin-bottom: 4px;
 }
 
 .nma-grade {
   font-size: 24px;
   font-weight: 800;
+}
+
+.nma-grade-text {
+  font-weight: 600;
+  font-size: 18px;
 }
 
 .nma-total {
@@ -86,7 +141,8 @@
 
 .nma-section-title {
   font-weight: 700;
-  margin: 12px 0 8px;
+  /* margin: 12px 0 8px; */
+  margin-bottom: 4px;
 }
 
 .nma-table {
@@ -126,6 +182,66 @@
 .nma-error {
   color: #d00000;
   line-height: 1.6;
+}
+
+.nma-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.nma-grade-small {
+  font-size: 22px;
+}
+
+.nma-date-badge {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border-radius: 999px;
+  /* background: rgba(255, 255, 255, 0.75); */
+  font-size: 12px;
+  font-weight: 700;
+  color: #555;
+}
+
+.nma-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.nma-summary-row span {
+  color: #777;
+}
+
+.nma-summary-row strong {
+  font-size: 17px;
+}
+
+.nma-detail-box {
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.nma-detail-box > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nma-detail-box span {
+  color: #777;
+}
+
+.nma-detail-box b {
+  text-align: right;
 }
 
 #nma-panel {

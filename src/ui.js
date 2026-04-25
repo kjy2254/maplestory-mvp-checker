@@ -4,6 +4,32 @@
   const { formatDate, formatAmount } = window.NexonMvpAnalyzer.utils;
   const { getNextWeekSummary } = window.NexonMvpAnalyzer.mvp;
 
+  const GRADE_STYLE = {
+    블랙: { bg: "#111", icon: "black" },
+    레드: { bg: "#e53935", icon: "red" },
+    다이아: { bg: "#00acc1", icon: "diamond" },
+    골드: { bg: "#ffd54f", icon: "gold" },
+    실버: { bg: "#cfd8dc", icon: "silver" },
+    브론즈: { bg: "#8d6e63", icon: "bronze" },
+  };
+
+  function getIconUrl(name) {
+    return chrome.runtime.getURL(`assets/${name}.png`);
+  }
+
+  function renderGradeBadge(gradeName) {
+    if (gradeName === "일반") {
+      return `<span class="nma-grade-text">없음</span>`;
+    }
+
+    const style = GRADE_STYLE[gradeName] || GRADE_STYLE["일반"];
+    const iconUrl = getIconUrl(style.icon);
+
+    return `
+    <img src="${iconUrl}" class="nma-grade-icon" alt="${gradeName}" />
+  `;
+  }
+
   function createPanel() {
     const existingPanel = document.getElementById("nma-panel");
     if (existingPanel) return existingPanel;
@@ -13,16 +39,26 @@
     panel.className = "nma-panel";
     panel.innerHTML = `
       <div class="nma-panel-header">
-        <strong>넥슨 MVP 분석</strong>
+        <div class="nma-header-title">
+          <strong>넥슨 MVP 분석</strong>
+          <span class="nma-help-icon" tabindex="0">?</span>
+          <div class="nma-tooltip">
+            이 확장프로그램으로 반영되는 금액은 구매한 아이템 기준입니다.<br />
+            인벤토리로 이동하지 않은 아이템 및 PC방 금액은 반영되지 않습니다.<br />
+            실제 등급과 차이가 있을 수 있으니 참고용으로만 사용해주세요.
+          </div>
+        </div>
         <button id="nma-close-button" class="nma-close-button" type="button">닫기</button>
       </div>
       <div id="nma-content">분석 버튼을 눌러주세요.</div>
     `;
 
     document.body.appendChild(panel);
-    document.getElementById("nma-close-button").addEventListener("click", () => {
-      panel.style.display = "none";
-    });
+    document
+      .getElementById("nma-close-button")
+      .addEventListener("click", () => {
+        panel.style.display = "none";
+      });
 
     return panel;
   }
@@ -89,42 +125,74 @@
 
   function createCurrentGradeCard({ grade, total }) {
     return `
-      <section class="nma-card">
-        <div class="nma-label">현재 예상 MVP 등급</div>
-        <div class="nma-grade">${grade.name}</div>
-        <div class="nma-total">${formatAmount(total)}</div>
-      </section>
-    `;
+    <section class="nma-card nma-card-current">
+      <div class="nma-label">현재 예상 MVP 등급</div>
+      <div class="nma-grade">
+        ${renderGradeBadge(grade.name)}
+      </div>
+      <div class="nma-total">${formatAmount(total)}</div>
+    </section>
+  `;
   }
 
   function createNextWeekCard(nextWeek, dropInfo) {
     return `
-      <section class="nma-card nma-card-warning">
-        <div class="nma-title">다음주 예상 등급</div>
-        <div>${formatDate(nextWeek.date)} 목요일 00:00 기준</div>
-        <div>제외 예정 금액: ${formatAmount(nextWeek.amountDropping)}</div>
-        <div>예상 누적 금액: ${formatAmount(nextWeek.total)} / 예상 등급: <b>${nextWeek.grade.name}</b></div>
+    <section class="nma-card nma-card-warning">
+      <div class="nma-card-header">
+        <div>
+          <div class="nma-label">다음주 예상 등급</div>
+          <div class="nma-grade nma-grade-small">
+            ${renderGradeBadge(nextWeek.grade.name)}
+          </div>
+        </div>
+        <div class="nma-date-badge">
+          ${formatDate(nextWeek.date)}
+        </div>
+      </div>
+
+      <div class="nma-summary-row">
+        <span>예상 누적</span>
+        <strong>${formatAmount(nextWeek.total)}</strong>
+      </div>
+
+      <div class="nma-detail-box">
+        <div>
+          <span>제외 예정</span>
+          <b>${formatAmount(nextWeek.amountDropping)}</b>
+        </div>
         ${createDropInfo(dropInfo)}
-      </section>
-    `;
+      </div>
+    </section>
+  `;
   }
 
   function createDropInfo(dropInfo) {
     if (!dropInfo) {
-      return `<div>예상 등급 하락일: <b>20주 내 하락 예상 없음</b></div>`;
+      return `
+      <div>
+        <span>하락 예상</span>
+        <b>20주 내 없음</b>
+      </div>
+    `;
     }
 
     return `
-      <div>예상 등급 하락일: <b>${formatDate(dropInfo.date)} 목요일 00:00</b></div>
-      <div>하락 후 예상 등급: <b>${dropInfo.grade.name}</b> / 예상 누적 금액: ${formatAmount(dropInfo.total)}</div>
-    `;
+    <div>
+      <span>하락 예정일</span>
+      <b>${formatDate(dropInfo.date)}</b>
+    </div>
+    <div>
+      <span>하락 후 등급</span>
+      <b>${dropInfo.grade.name} · ${formatAmount(dropInfo.total)}</b>
+    </div>
+  `;
   }
 
   function createWeeklyTable(weeks) {
     const rowsHtml = weeks.map(createWeeklyRow).join("");
 
     return `
-      <section>
+      <section class="nma-card nma-card-weekly">
         <div class="nma-section-title">MVP 주차별 사용 합계</div>
         <table class="nma-table">
           <thead>

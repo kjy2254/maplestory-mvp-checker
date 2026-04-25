@@ -21,5 +21,11 @@
   "host_permissions": [
     "https://payment.nexon.com/*",
     "https://public.api.nexon.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*.png"],
+      "matches": ["https://payment.nexon.com/*"]
+    }
   ]
 }
