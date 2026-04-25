@@ -35,7 +35,7 @@
 - 결제 내역은 외부 서버로 전송하지 않습니다.
 - 사용자 데이터를 별도로 저장하지 않습니다.
 
-자세한 내용은 [개인정보처리방침](./privacy.html)을 확인해 주세요.
+자세한 내용은 [개인정보처리방침](https://kjy2254.github.io/maplestory-mvp-checker/privacy.html)을 확인해 주세요.
 
 ## 권한 사용 안내
 
