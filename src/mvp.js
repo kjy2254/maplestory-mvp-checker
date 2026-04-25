@@ -1,7 +1,8 @@
 (function () {
   "use strict";
 
-  const { MVP_GRADES, MVP_WEEK_COUNT, FUTURE_DROP_CHECK_WEEKS } = window.NexonMvpAnalyzer.constants;
+  const { MVP_GRADES, MVP_WEEK_COUNT, FUTURE_DROP_CHECK_WEEKS } =
+    window.NexonMvpAnalyzer.constants;
   const { addDays, parseNexonDate } = window.NexonMvpAnalyzer.utils;
 
   function getMvpWeekStart(baseDate = new Date()) {
@@ -26,10 +27,17 @@
   }
 
   function getGrade(amount) {
-    return MVP_GRADES.find((grade) => amount >= grade.amount) ?? MVP_GRADES[MVP_GRADES.length - 1];
+    return (
+      MVP_GRADES.find((grade) => amount >= grade.amount) ??
+      MVP_GRADES[MVP_GRADES.length - 1]
+    );
   }
 
-  function getWeeklyTotalsByBaseWeek(items, baseWeekStart, weekCount = MVP_WEEK_COUNT) {
+  function getWeeklyTotalsByBaseWeek(
+    items,
+    baseWeekStart,
+    weekCount = MVP_WEEK_COUNT,
+  ) {
     const weeks = [];
 
     for (let i = 0; i < weekCount; i++) {
@@ -84,7 +92,11 @@
     };
   }
 
-  function getFutureGradeDrop(summary, items, maxWeeks = FUTURE_DROP_CHECK_WEEKS) {
+  function getFutureGradeDrop(
+    summary,
+    items,
+    maxWeeks = FUTURE_DROP_CHECK_WEEKS,
+  ) {
     const currentGrade = summary.grade;
     const thisWeekStart = getMvpWeekStart();
 

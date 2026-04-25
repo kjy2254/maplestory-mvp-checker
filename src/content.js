@@ -19,8 +19,9 @@
 
     try {
       const history = await fetchRecentHistory();
-      const summary = getCurrentMvpSummary(history);
-      const dropInfo = getFutureGradeDrop(summary, history);
+      const mapleItems = mvp.filterMapleStoryItems(history);
+      const summary = getCurrentMvpSummary(mapleItems);
+      const dropInfo = getFutureGradeDrop(summary, mapleItems);
 
       renderWeeklyResult(summary, dropInfo);
     } catch (error) {

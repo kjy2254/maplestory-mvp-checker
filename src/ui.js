@@ -40,7 +40,7 @@
     panel.innerHTML = `
       <div class="nma-panel-header">
         <div class="nma-header-title">
-          <strong>넥슨 MVP 분석</strong>
+          <strong>메이플 MVP 분석</strong>
           <span class="nma-help-icon" tabindex="0">?</span>
           <div class="nma-tooltip">
             이 확장프로그램으로 반영되는 금액은 구매한 아이템 기준입니다.<br />
