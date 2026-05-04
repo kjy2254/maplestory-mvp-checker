@@ -14,7 +14,11 @@
   };
 
   function getIconUrl(name) {
-    return chrome.runtime.getURL(`assets/${name}.png`);
+    if (typeof chrome !== "undefined" && chrome.runtime?.getURL) {
+      return chrome.runtime.getURL(`assets/${name}.png`);
+    }
+
+    return `assets/${name}.png`;
   }
 
   function renderGradeBadge(gradeName) {
@@ -198,7 +202,7 @@
           <thead>
             <tr>
               <th>기간</th>
-              <th class="nma-right">금액</th>
+              <th class="nma-right">금액(+PC방)</th>
             </tr>
           </thead>
           <tbody>${rowsHtml}</tbody>
@@ -208,13 +212,20 @@
   }
 
   function createWeeklyRow(week) {
+    const pcAmountHtml = week.pcAmount
+      ? `<div class="nma-sub-text">(+${formatAmount(week.pcAmount)})</div>`
+      : "";
+
     return `
       <tr>
         <td>
           <div class="nma-period">${formatDate(week.start)} ~ ${formatDate(week.end)}</div>
           <div class="nma-sub-text">${week.label}</div>
         </td>
-        <td class="nma-right">${formatAmount(week.total)}</td>
+        <td class="nma-right">
+          ${formatAmount(week.total)}
+          ${pcAmountHtml}
+        </td>
       </tr>
     `;
   }

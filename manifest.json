@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "MapleStory MVP Checker",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "넥슨 결제 내역을 기반으로 메이플스토리 MVP 등급을 분석하고, 다음 주 등급 및 하락 예상 시점을 확인할 수 있는 확장 프로그램입니다.",
   "content_scripts": [
     {
@@ -34,11 +34,13 @@
     "128": "icons/icon128.png"
   },
   "action": {
+    "default_popup": "popup.html",
     "default_title": "넥슨 MY결제 페이지에서 사용하세요",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     }
-  }
+  },
+  "permissions": ["storage"]
 }

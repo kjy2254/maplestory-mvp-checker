@@ -162,7 +162,7 @@
 }
 
 .nma-right {
-  text-align: right;
+  text-align: right !important;
 }
 
 .nma-period {

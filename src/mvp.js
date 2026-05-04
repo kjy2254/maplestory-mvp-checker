@@ -3,7 +3,7 @@
 
   const { MVP_GRADES, MVP_WEEK_COUNT, FUTURE_DROP_CHECK_WEEKS } =
     window.NexonMvpAnalyzer.constants;
-  const { addDays, parseNexonDate } = window.NexonMvpAnalyzer.utils;
+  const { addDays, parseNexonDate, formatDate } = window.NexonMvpAnalyzer.utils;
 
   function getMvpWeekStart(baseDate = new Date()) {
     const date = new Date(baseDate);
@@ -36,15 +36,17 @@
   function getWeeklyTotalsByBaseWeek(
     items,
     baseWeekStart,
-    weekCount = MVP_WEEK_COUNT,
+    weekCount = 13,
+    pcCafeData = {},
   ) {
     const weeks = [];
 
     for (let i = 0; i < weekCount; i++) {
       const start = addDays(baseWeekStart, -7 * i);
       const end = addDays(start, 6);
+      const weekKey = formatDate(start);
 
-      const total = items.reduce((sum, item) => {
+      const itemTotal = items.reduce((sum, item) => {
         const date = parseNexonDate(item.purchaseDate);
         date.setHours(0, 0, 0, 0);
 
@@ -53,11 +55,16 @@
           : sum;
       }, 0);
 
+      const pcAmount = Number(pcCafeData[weekKey]?.amount || 0);
+      const total = itemTotal + pcAmount;
+
       weeks.push({
         index: i,
-        label: i === 0 ? "이번 주" : `${i}주 전`,
+        label: i === 0 ? "해당 주" : `${i}주 전`,
         start,
         end,
+        itemTotal,
+        pcAmount,
         total,
       });
     }
@@ -65,12 +72,43 @@
     return weeks;
   }
 
-  function getWeeklyTotals(items, weekCount = MVP_WEEK_COUNT) {
-    return getWeeklyTotalsByBaseWeek(items, getMvpWeekStart(), weekCount);
+  function getWeeklyTotals(items, weekCount = MVP_WEEK_COUNT, pcCafeData = {}) {
+    const thisWeekStart = getMvpWeekStart();
+    const weeks = [];
+
+    for (let i = 0; i < weekCount; i++) {
+      const start = addDays(thisWeekStart, -7 * i);
+      const end = addDays(start, 6);
+      const weekKey = formatDate(start);
+
+      const itemTotal = items.reduce((sum, item) => {
+        const date = parseNexonDate(item.purchaseDate);
+        date.setHours(0, 0, 0, 0);
+
+        return date >= start && date <= end
+          ? sum + Number(item.purchaseAmount ?? 0)
+          : sum;
+      }, 0);
+
+      const pcAmount = Number(pcCafeData[weekKey]?.amount || 0);
+      const total = itemTotal + pcAmount;
+
+      weeks.push({
+        index: i,
+        label: i === 0 ? "이번 주" : `${i}주 전`,
+        start,
+        end,
+        itemTotal,
+        pcAmount,
+        total,
+      });
+    }
+
+    return weeks;
   }
 
-  function getCurrentMvpSummary(items) {
-    const weeks = getWeeklyTotals(items);
+  function getCurrentMvpSummary(items, pcCafeData = {}) {
+    const weeks = getWeeklyTotals(items, 13, pcCafeData);
     const total = weeks.reduce((sum, week) => sum + week.total, 0);
     const grade = getGrade(total);
 
@@ -95,6 +133,7 @@
   function getFutureGradeDrop(
     summary,
     items,
+    pcCafeData = {},
     maxWeeks = FUTURE_DROP_CHECK_WEEKS,
   ) {
     const currentGrade = summary.grade;
@@ -102,7 +141,13 @@
 
     for (let i = 1; i <= maxWeeks; i++) {
       const baseWeekStart = addDays(thisWeekStart, 7 * i);
-      const weeks = getWeeklyTotalsByBaseWeek(items, baseWeekStart);
+
+      const weeks = getWeeklyTotalsByBaseWeek(
+        items,
+        baseWeekStart,
+        13,
+        pcCafeData,
+      );
       const total = weeks.reduce((sum, week) => sum + week.total, 0);
       const grade = getGrade(total);
 
